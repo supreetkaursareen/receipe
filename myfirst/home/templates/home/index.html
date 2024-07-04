@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Tutorial</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    {{ peoples }}
+    <table class="container">
+        <tr>
+            <th>s.no</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Country</th>
+            <th>Can Vote</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Maria Anders</td>
+            <td>30</td>
+            <td>Germany</td>
+            <td>👍</td>
+        </tr>
+        {% for person in peoples %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ person.name }}</td>
+            <td>{{ person.age }}</td>
+            <td>Mexico</td>
+            <td {% if person.age >= 18 %} style="color: red" {% endif %}>
+                {% if person.age >= 18 %}
+                    👍
+                {% else %}
+                    👎
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+<p>
+    {% if cucumber in vegetables %}
+    yes availabe
+     {% elif tomato in vegetables %}
+
+    {% else %}
+    not available
+    {% endif %}
+    <a href="/contact/">
+        contact
+    </a>
+     <a href="/about/">
+        about
+    </a>
+</p>
+</body>
+</html>

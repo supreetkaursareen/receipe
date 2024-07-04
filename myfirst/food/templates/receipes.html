@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Recipe</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+    margin-right: 20px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+textarea,
+input[type="file"] {
+     width: 100%;
+     padding: 8px;
+     margin-top: 5px;
+     box-sizing: border-box;
+     border-radius: 4px;
+     border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+.table-container {
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Add Recipe</h2>
+            <form id="recipeForm" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="receipeName">Receipe name</label>
+                    <input type="text" id="receipeName" name="receipe_name" required>
+                </div>
+                <div class="input-group">
+                    <label for="description">Recipe description</label>
+                    <textarea id="description" name="receipe_description" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="receipeImage">Receipe Image</label>
+                    <input type="file" id="receipeImage" name="receipe_image" accept="image/*" required>
+                </div>
+                <button type="submit">Add Receipe</button>
+            </form>
+            <form>
+            <div>
+                <hr>
+               <label for="search">search</label>
+                    <input type="text" id="search" name="search" required>
+            </div>
+                <button type="submit">search</button>
+</form>
+        </div>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Receipe name</th>
+                        <th scope="col">Receipe description</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Actions</th> <!-- Added "Actions" column header -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for receipe in receipes %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ receipe.receipe_name }}</td>
+                        <td>{{ receipe.receipe_description }}</td>
+                        <td>
+                            <img src="/media/{{ receipe.receipe_image }}" style="height : 50px">
+                        </td>
+                        <td> <!-- Added "Actions" column -->
+    <a href="/delete-receipe/{{receipe.id}}/"class="btn btn-danger">Delete</a>
+                                <a href="/update-receipe/{{receipe.id}}/"class="btn btn-success">Update</a>
+
+
+
+</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
